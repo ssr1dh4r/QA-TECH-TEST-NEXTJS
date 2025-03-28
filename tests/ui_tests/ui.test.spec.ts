@@ -82,7 +82,7 @@ test.describe('UI Test', () => {
         await homePage.addEndDate(endDate);
 
         //iterate through the images returned via the API call and confirm only the images with upload date within the test dat range is/are displayed
-        for(const image of imageList){
+        for(var image of imageList){
             if(image.UploadDate >= startDateISO && image.UploadDate <= endDataISO){
                expect(homePage.getImageBasedOnTitle(image.Title)).toBeVisible();
             } else {

@@ -28,7 +28,7 @@ export class ImageApiCalls extends BaseApiClient{
     async getImageUsingKeyword(keyword: string[]){
 
         //if the array contains just one keyword then adding to url is easy
-        let param : string = keyword[0];
+        var param : string = keyword[0];
 
         //if the keyword array contains more than 1 item then aggregate the keywords separating with &
         if(keyword.length > 1){

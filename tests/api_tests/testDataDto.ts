@@ -1,13 +1,10 @@
 import { ImageTypeRequest } from "@/components/Helper/ImageConsts";
 
 class TestDataDto{
-  //id: string;
   title?: string;
   image?: string;
   keywords?: string[];
   uploadDate?: Date;
-  //expectedTitle: string;
-  //expectedImageUrl: string;
 
     constructor(builder: TestDataBuilder){
       this.title = builder.title;

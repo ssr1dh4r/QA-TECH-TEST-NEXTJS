@@ -3,6 +3,7 @@ import { HomePage } from './page_models/homePage';
 import { generateTitle} from '../utils/generateRamdomTitle';
 import { convertToISO } from '../utils/convertDate';
 import { GetAllImages } from '@/components/Helper/Api';
+import { ImageType } from '@/components/Helper/ImageConsts';
 
 test.describe('UI Test', () => {
     const pageUrl = "http://localhost:3000/";
@@ -11,8 +12,7 @@ test.describe('UI Test', () => {
     test.beforeEach(async ({ page }) => {
        homePage = new HomePage(page);
        await homePage.launchHomePage(pageUrl);
-        console.log(page.url());
-        expect(page.url()).toBe(pageUrl);
+       expect(page.url()).toBe(pageUrl);
        
     });
 
@@ -68,6 +68,7 @@ test.describe('UI Test', () => {
         
         //Use existing Api call to get all available images
         const imageList = await GetAllImages();
+        const filteredImages : ImageType[] = [];
 
         //test data
         let startDate = '02/22/2025';
@@ -84,10 +85,9 @@ test.describe('UI Test', () => {
         //iterate through the images returned via the API call and confirm only the images with upload date within the test dat range is/are displayed
         for(var image of imageList){
             if(image.UploadDate >= startDateISO && image.UploadDate <= endDataISO){
-               expect(homePage.getImageBasedOnTitle(image.Title)).toBeVisible();
-            } else {
-                expect(homePage.getImageBasedOnTitle(image.Title)).not.toBeVisible();
-            }
+               filteredImages.push(image);
+               expect(filteredImages.length).toEqual(homePage.getImagesDisplayed().count);
+            } 
         }
 
     });

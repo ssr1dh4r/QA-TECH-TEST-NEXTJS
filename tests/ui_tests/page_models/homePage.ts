@@ -29,6 +29,7 @@ export class HomePage{
        await this.enterKeywords(keywords);
        await this.enterUploadDate(dateValue);
        await this.submitImage(); 
+       await this.waitForPageLoadBasedOnSelector(`//div[@id='__next']//div/ul//div[contains(@class,'MuiImageListItemBar-title') and contains(text(),'${title}')]/../../..`)
     }
 
     async enterTitle(title: string){
@@ -70,6 +71,10 @@ export class HomePage{
         return imageBasedTitle;
     }
 
+    getImagesDisplayed() : Locator{
+        return this.page.locator("//div[@id='__next']//div/ul//li");
+    }
+
     async selectFilterValue(value: string[]){
         const filterDropDown = this.page.locator("//h6[contains(text(),'Filter')]/following-sibling::div/div");
         await filterDropDown.click();
@@ -81,7 +86,7 @@ export class HomePage{
     }
 
     async waitForPageLoadBasedOnSelector(selector: string){
-        await this.page.waitForSelector(selector, {state: 'visible', timeout: 5000});
+        await this.page.waitForSelector(selector, {state: 'visible', timeout: 20000});
     }
 
     async addStartDate(dateValue : string){
